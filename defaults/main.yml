@@ -1,3 +1,17 @@
 ---
 
 # Defaults vars file for grafana role
+
+# General
+#------------------------------------------------------------------------------
+
+# Packages and repositories management
+grafana_packages: "{{ _grafana_packages }}"
+grafana_repository_cache_valid_time: 3600
+grafana_repositories_keys: "{{ _grafana_repositories_keys }}"
+grafana_repositories: "{{ _grafana_repositories }}"
+grafana_system_dependencies: "{{ _grafana_system_dependencies | default([]) }}"
+
+# Service management
+# Dict with 'name', 'state' and 'enabled' keys
+grafana_service: "{{ _grafana_service }}"

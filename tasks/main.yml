@@ -7,3 +7,11 @@
   tags:
     - 'role::grafana'
     - 'role::grafana::init'
+    - 'role::grafana::install'
+
+
+- name: 'INSTALL | Manage os family installation tasks'
+  include: "{{ role_path }}/tasks/install/{{ ansible_os_family | lower }}_family.yml"
+  tags:
+    - 'role::grafana'
+    - 'role::grafana::install'
