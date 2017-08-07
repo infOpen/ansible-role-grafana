@@ -1,0 +1,34 @@
+# {{ ansible_managed }}
+
+[[servers]]
+host = "{{ grafana_ldap_config.servers.host }}"
+port = {{ grafana_ldap_config.servers.port }}
+use_ssl = {{ grafana_ldap_config.servers.use_ssl | lower }}
+
+start_tls = {{ grafana_ldap_config.servers.start_tls | lower }}
+ssl_skip_verify = {{ grafana_ldap_config.servers.ssl_skip_verify | lower }}
+
+# root_ca_cert = "{{ grafana_ldap_config.servers.root_ca_cert }}"
+
+bind_dn = "{{ grafana_ldap_config.servers.bind_dn }}"
+bind_password = """{{ grafana_ldap_config.servers.bind_password }}"""
+search_filter = "{{ grafana_ldap_config.servers.search_filter }}"
+search_base_dns = [{% for search_item in grafana_ldap_config.servers.search_base_dns %}'{{ search_item }}',{% endfor %}]
+# group_search_filter = "{{ grafana_ldap_config.servers.group_search_filter }}"
+# group_search_filter_user_attribute = "{{ grafana_ldap_config.servers.group_search_filter }}"
+# group_search_base_dns = [{{ grafana_ldap_config.servers.group_search_base_dns | map('quote') | join(',') }}]
+# group_search_base_dns = [{% for search_item in grafana_ldap_config.servers.group_search_base_dns %}{{ search_item | quote }},{% endfor %}]
+
+[servers.attributes]
+name = "{{ grafana_ldap_config.attributes.name }}"
+surname = "{{ grafana_ldap_config.attributes.surname }}"
+username = "{{ grafana_ldap_config.attributes.username }}"
+member_of = "{{ grafana_ldap_config.attributes.member_of }}"
+email =  "{{ grafana_ldap_config.attributes.email }}"
+
+{% for group_mapping in grafana_ldap_config.group_mappings %}
+[[servers.group_mappings]]
+group_dn = "{{ group_mapping.group_dn }}"
+org_role = "{{ group_mapping.org_role }}"
+org_id = {{ group_mapping.org_id }}
+{% endfor %}

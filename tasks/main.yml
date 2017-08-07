@@ -6,12 +6,22 @@
   include: "{{ role_path }}/tasks/manage_variables.yml"
   tags:
     - 'role::grafana'
+    - 'role::grafana::config'
     - 'role::grafana::init'
     - 'role::grafana::install'
 
 
 - name: 'INSTALL | Manage os family installation tasks'
   include: "{{ role_path }}/tasks/install/{{ ansible_os_family | lower }}_family.yml"
+  become: True
   tags:
     - 'role::grafana'
     - 'role::grafana::install'
+
+
+- name: 'INSTALL | Manage configuration tasks'
+  include: "{{ role_path }}/tasks/configure.yml"
+  become: True
+  tags:
+    - 'role::grafana'
+    - 'role::grafana::config'

@@ -15,12 +15,8 @@ _grafana_packages:
     state: 'present'
 
 # System dependencies
-_grafana_sytem_dependencies:
+_grafana_system_dependencies:
   - name: 'apt-transport-https'
     state: 'present'
-
-# Services
-_grafana_service:
-  name: 'grafana-server'
-  state: 'enabled'
-  enabled: True
+  - name: 'ca-certificates'
+    state: 'present'

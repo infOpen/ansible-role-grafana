@@ -2,7 +2,7 @@
 
 # Specific install tasks for Debian family
 
-- name: 'INSTALL | APT | Install system dependencies packages'
+- name: 'INSTALL | APT | Install system dependencies packages'
   apt:
     name: "{{ item.name }}"
     update_cache: True
@@ -18,7 +18,7 @@
   with_items: "{{ grafana_repositories_keys }}"
 
 
-- name: 'INSTALL | APT | Install repository'
+- name: 'INSTALL | APT | Install repository'
   apt_repository:
     repo: "{{ item.repo }}"
     update_cache: True
@@ -26,7 +26,7 @@
   with_items: "{{ grafana_repositories }}"
 
 
-- name: 'INSTALL | APT | Install packages'
+- name: 'INSTALL | APT | Install packages'
   apt:
     name: "{{ item.name }}"
     update_cache: True
