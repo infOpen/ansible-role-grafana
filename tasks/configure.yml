@@ -30,11 +30,3 @@
     group: "{{ grafana_paths.files.ldap.group }}"
     mode: "{{ grafana_paths.files.ldap.mode }}"
   notify: 'HANDLER | Restart Grafana'
-
-
-- name: 'CONFIG | Manage datasources configuration tasks'
-  include: "{{ role_path }}/tasks/manage_datasources.yml"
-  become: True
-  tags:
-    - 'role::grafana'
-    - 'role::grafana::config'

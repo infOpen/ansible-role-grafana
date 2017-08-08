@@ -15,7 +15,7 @@ grafana_system_dependencies: "{{ _grafana_system_dependencies | default([]) }}"
 # Service management
 grafana_service:
   name: 'grafana-server'
-  state: 'enabled'
+  state: 'started'
   enabled: True
 
 # User and group management

@@ -19,8 +19,24 @@
     - 'role::grafana::install'
 
 
-- name: 'INSTALL | Manage configuration tasks'
+- name: 'CONFIG | Manage configuration files'
   include: "{{ role_path }}/tasks/configure.yml"
+  become: True
+  tags:
+    - 'role::grafana'
+    - 'role::grafana::config'
+
+
+- name: 'CONFIG | Manage service state'
+  include: "{{ role_path }}/tasks/manage_service.yml"
+  become: True
+  tags:
+    - 'role::grafana'
+    - 'role::grafana::config'
+
+
+- name: 'CONFIG | Manage datasources configuration tasks'
+  include: "{{ role_path }}/tasks/manage_datasources.yml"
   become: True
   tags:
     - 'role::grafana'
