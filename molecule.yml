@@ -16,12 +16,14 @@ docker:
     - name: 'grafana-docker-jessie'
       image: 'debian'
       image_version: 'jessie'
+      privileged: True
     - name: 'grafana-docker-trusty'
       image: 'ubuntu'
       image_version: 'trusty'
     - name: 'grafana-docker-xenial'
-      image: 'ubuntu'
-      image_version: 'xenial'
+      image: 'infopen/ubuntu-xenial-ssh-py27'
+      image_version: '0.2.0'
+      privileged: True
 molecule:
   ignore_paths:
     - '.git'

@@ -17,6 +17,12 @@
 
 
 - hosts: 'all'
+  pre_tasks:
+    - name: 'Install net-tools package'
+      apt:
+        name: 'net-tools'
+        state: 'present'
+      changed_when: False
   roles:
     - role: "{{ role_name }}"
   vars:
