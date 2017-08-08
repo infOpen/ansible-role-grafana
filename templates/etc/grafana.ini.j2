@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+
+{% for config_section_name, config_section_items in grafana_config.items() %}
+[{{ config_section_name }}]
+{% for config_item_key, config_item_value in config_section_items.items() %}
+{{ config_item_key }} = {{ config_item_value }}
+{% endfor %}
+{% endfor %}

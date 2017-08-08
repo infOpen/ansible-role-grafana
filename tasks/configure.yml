@@ -1,0 +1,32 @@
+---
+
+# Grafana configuration management tasks
+
+- name: 'CONFIG | Manage environment configuration file'
+  template:
+    src: "{{ role_path }}/templates/etc/default.j2"
+    dest: "{{ grafana_paths.files.default.path }}"
+    owner: "{{ grafana_paths.files.default.user }}"
+    group: "{{ grafana_paths.files.default.group }}"
+    mode: "{{ grafana_paths.files.default.mode }}"
+  notify: 'HANDLER | Restart Grafana'
+
+
+- name: 'CONFIG | Manage main configuration file'
+  template:
+    src: "{{ role_path }}/templates/etc/grafana.ini.j2"
+    dest: "{{ grafana_paths.files.conf.path }}"
+    owner: "{{ grafana_paths.files.conf.user }}"
+    group: "{{ grafana_paths.files.conf.group }}"
+    mode: "{{ grafana_paths.files.conf.mode }}"
+  notify: 'HANDLER | Restart Grafana'
+
+
+- name: 'CONFIG | Manage ldap configuration file'
+  template:
+    src: "{{ role_path }}/templates/etc/ldap.toml.j2"
+    dest: "{{ grafana_paths.files.ldap.path }}"
+    owner: "{{ grafana_paths.files.ldap.user }}"
+    group: "{{ grafana_paths.files.ldap.group }}"
+    mode: "{{ grafana_paths.files.ldap.mode }}"
+  notify: 'HANDLER | Restart Grafana'

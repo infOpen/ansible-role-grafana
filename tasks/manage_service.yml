@@ -1,0 +1,16 @@
+---
+
+# Grafana service management
+
+- name: 'CONFIG | Manage service'
+  service:
+    name: "{{ grafana_service.name }}"
+    state: "{{ grafana_service.state }}"
+    enabled: "{{ grafana_service.enabled }}"
+  notify: 'HANDLER | Restart Grafana'
+
+
+- name: 'CONFIG | Ensure service started'
+  wait_for:
+    port: "{{ grafana_config.server.http_port }}"
+    delay: 5
