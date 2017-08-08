@@ -1,0 +1,63 @@
+---
+
+# Manage Grafana datasources using API
+
+- name: 'CONFIG | DATASOURCE | Get existing datasources'
+  uri:
+    url: "{{ grafana_api_url }}/api/datasources"
+    method: 'GET'
+    return_content: True
+    force_basic_auth: "{{ grafana_api_force_basic_auth }}"
+    user: "{{ grafana_api_user | default(omit) }}"
+    password: "{{ grafana_api_password | default(omit) }}"
+    headers: "{{ grafana_api_headers | default(omit) }}"
+  register: '__grafana_datasources'
+
+
+- name: 'CONFIG | DATASOURCE | Remove datasources with absent state'
+  uri:
+    url: "{{ grafana_api_url }}/api/datasources/{{ item.name }}"
+    method: 'DELETE'
+    return_content: True
+    force_basic_auth: "{{ grafana_api_force_basic_auth }}"
+    user: "{{ grafana_api_user | default(omit) }}"
+    password: "{{ grafana_api_password | default(omit) }}"
+    headers: "{{ grafana_api_headers | default(omit) }}"
+  with_items: "{{ grafana_datasources }}"
+  when : "item.state | default('present') == 'absent'"
+
+
+- name: 'CONFIG | DATASOURCE | Create missing datasources'
+  uri:
+    url: "{{ grafana_api_url }}/api/datasources"
+    method: 'POST'
+    return_content: True
+    force_basic_auth: "{{ grafana_api_force_basic_auth }}"
+    user: "{{ grafana_api_user | default(omit) }}"
+    password: "{{ grafana_api_password | default(omit) }}"
+    headers: "{{ grafana_api_headers | default(omit) }}"
+    body_format: 'json'
+    body: "{{ item | to_json }}"
+  register: '__grafana_new_datasources'
+  with_items: "{{ grafana_datasources }}"
+  when :
+    - "item.state | default('present') == 'present'"
+    - "item.name not in (__grafana_datasources.json | map(attribute='name') | list)"
+
+
+- name: 'CONFIG | DATASOURCE | Update missing datasources'
+  uri:
+    url: "{{ grafana_api_url }}/api/datasources/{{ item.name }}"
+    method: 'PUT'
+    return_content: True
+    force_basic_auth: "{{ grafana_api_force_basic_auth }}"
+    user: "{{ grafana_api_user | default(omit) }}"
+    password: "{{ grafana_api_password | default(omit) }}"
+    headers: "{{ grafana_api_headers | default(omit) }}"
+    body_format: 'json'
+    body: "{{ item | to_json }}"
+  register: '__grafana_new_datasources'
+  with_items: "{{ grafana_datasources }}"
+  when :
+    - "item.state | default('present') == 'present'"
+    - "item.name in (__grafana_datasources.json | map(attribute='name') | list)"

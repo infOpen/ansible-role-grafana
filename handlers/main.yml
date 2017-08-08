@@ -1,0 +1,13 @@
+---
+
+# Handlers main file for grafana role
+
+- name: 'HANDLER | Restart Grafana'
+  become: True
+  service:
+    name: "{{ grafana_service.name }}"
+    state: 'restarted'
+  when: "grafana_service != 'stopped'"
+  tags:
+    - 'role::grafana'
+    - 'role::grafana::install'

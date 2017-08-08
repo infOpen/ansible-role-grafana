@@ -1,0 +1,22 @@
+---
+
+# Debian family variables
+#------------------------------------------------------------------------------
+
+# Repositories management
+_grafana_repositories:
+  - repo: "deb https://packagecloud.io/grafana/stable/debian/ jessie main"
+_grafana_repositories_keys:
+  - url: "https://packagecloud.io/gpg.key"
+
+# Packages management
+_grafana_packages:
+  - name: 'grafana'
+    state: 'present'
+
+# System dependencies
+_grafana_system_dependencies:
+  - name: 'apt-transport-https'
+    state: 'present'
+  - name: 'ca-certificates'
+    state: 'present'
