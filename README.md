@@ -361,6 +361,34 @@ _grafana_ldap_config:
 grafana_ldap_config: "{{ _grafana_ldap_config }}"
 ```
 
+## How manage ...
+
+### Datasources
+
+This role manage Grafana datasources using API.
+Authentication is done by basic auth or API token.
+
+Just configure `grafana_datasources` variable.
+
+Example:
+``` yaml
+grafana_datasources:
+  - id: 1
+    orgId: 1
+    name: 'test_datasource'
+    type: 'graphite'
+    access: 'proxy'
+    url: 'http://mydatasource.com'
+    password: ''
+    user: ''
+    database: ''
+    basicAuth: False
+    basicAuthUser: ''
+    basicAuthPassword: ''
+    isDefault: False
+    jsonData: None
+```
+
 ## Dependencies
 
 None

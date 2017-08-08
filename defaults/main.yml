@@ -77,6 +77,11 @@ grafana_paths: "{{ _grafana_paths }}"
 grafana_max_open_files: 10000
 grafana_restart_on_upgrade: True
 
+grafana_api_force_basic_auth: True
+grafana_api_url: "{{ grafana_config.server.root_url }}"
+grafana_api_user: "{{ grafana_config.security.admin_user }}"
+grafana_api_password: "{{ grafana_config.security.admin_password }}"
+
 grafana_app_mode: 'production'
 grafana_instance_name: '${HOSTNAME}'
 
@@ -315,3 +320,5 @@ _grafana_ldap_config:
       org_role: 'Viewer'
       org_id: 1
 grafana_ldap_config: "{{ _grafana_ldap_config }}"
+
+grafana_datasources: []
